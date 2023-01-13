@@ -1,5 +1,6 @@
 package com.customerAccount.services.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +13,8 @@ public class ReportDTO  {
 	private String nameCustomer;
 	private String accountNumber;
 	private String typeAccount;
-	private Double initialBalance;
+	private BigDecimal initialBalance;
 	private Boolean status;
-	private Double value;
-	private Double balance;
+	private BigDecimal value;
+	private BigDecimal balance;
 }

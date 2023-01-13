@@ -1,13 +1,21 @@
 package com.customerAccount.services.exceptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.TransactionException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ErrorHandler {
@@ -23,6 +31,8 @@ public class ErrorHandler {
 	private static final String CUSTOMER_OR_TYPEACCOUNT_NOT_FOUND = "Customer or Type Account not found";
 	
 	public static final String INSUFFICIENT_BALANCE = "Insufficent balance";
+	
+	public static final String FORMAT_INVALID_STRING = "Invalid format in string, string empty";
 
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<ErrorInfo> runtimeException(HttpServletRequest request, RuntimeException e) {
@@ -55,7 +65,12 @@ public class ErrorHandler {
 				httpStatus = HttpStatus.NOT_FOUND;
 			}
 			
+		}else if(e.getCause() instanceof InvalidFormatException) {
+			errorInfo = new ErrorInfo(HttpStatus.OK.value(), FORMAT_INVALID_STRING,
+					request.getRequestURI());
+			httpStatus = HttpStatus.OK;
 		}
+			
 		return new ResponseEntity<>(errorInfo, httpStatus);
 	}
 
@@ -90,5 +105,39 @@ public class ErrorHandler {
 		HttpStatus httpStatus = null;
 
 		return new ResponseEntity<>(errorInfo, httpStatus);
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorInfo> handleValidationErrors(HttpServletRequest request, MethodArgumentNotValidException ex) {
+		
+		
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        
+        List<String> message = this.buildMessage(fieldErrors);
+        
+        ErrorInfo errorInfo = new ErrorInfo(HttpStatus.OK.value(), message, request.getRequestURI());
+        
+        return new ResponseEntity<>(errorInfo, HttpStatus.OK);
+    }
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorInfo> constraintViolationExceptionErrors(HttpServletRequest request,ConstraintViolationException ex) {
+		
+		List<String> errorList = new ArrayList<>();
+		ex.getConstraintViolations().forEach(constrains ->{
+			errorList.add(constrains.getMessage());
+		});
+		
+        ErrorInfo errorInfo = new ErrorInfo(HttpStatus.OK.value(), errorList, request.getRequestURI());
+        
+        return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
+    }
+	
+	private List<String> buildMessage(List<FieldError> fieldErrors) {
+		List<String> message = new ArrayList<>();
+		fieldErrors.forEach(field ->{
+			message.add(field.getDefaultMessage().toUpperCase());
+		});
+		return message;
 	}
 }

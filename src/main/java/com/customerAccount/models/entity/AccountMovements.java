@@ -14,6 +14,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.customerAccount.services.enums.TypesOfMovements;
@@ -36,10 +37,10 @@ public class AccountMovements {
 	private TypesOfMovements typeOfMovement;
 	
 	@Column(scale = 2, nullable = false)
-	private Double value;
+	private BigDecimal value;
 	
 	@Column(scale = 2, nullable = false)
-	private Double balance;
+	private BigDecimal balance;
 	
 	@JsonBackReference
 	@ManyToOne

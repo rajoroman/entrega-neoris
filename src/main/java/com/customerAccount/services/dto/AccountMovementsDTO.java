@@ -1,5 +1,6 @@
 package com.customerAccount.services.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,7 +20,7 @@ public class AccountMovementsDTO extends MovementBaseDTO {
 
 	private Long id;	
 	private AccountDTO account;
-	private Double balance;
+	private BigDecimal balance;
 	private Boolean status;
 	@Temporal(TemporalType.DATE)
 	private LocalDate date;

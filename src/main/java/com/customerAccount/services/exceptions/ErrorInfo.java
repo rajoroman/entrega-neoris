@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ErrorInfo {
 	
 	
-	   public ErrorInfo(int statusCode, String message, String uri) {
+	   public ErrorInfo(int statusCode, Object message, String uri) {
 	       this.message = message;
 	       this.statusCode = statusCode;
 	       this.uri = uri;
@@ -18,7 +18,7 @@ public class ErrorInfo {
 	   }
 
 	   @JsonProperty("message")
-	   private String message;
+	   private Object message;
 	   
 	   @JsonProperty("status_code")
 	   private int statusCode;

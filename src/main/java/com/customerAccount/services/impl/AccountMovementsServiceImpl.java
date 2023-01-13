@@ -1,5 +1,6 @@
 package com.customerAccount.services.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,28 +48,14 @@ public class AccountMovementsServiceImpl implements AllAccountMovementsServiceRe
 			accountMovementsDTOList.forEach(newMovenment -> {
 					try {
 						AccountDTO accountDTO = accountServiceRepository.withAccountNumber(newMovenment.getAccountNumber());
-						Double balanceCurrent = accountDTO.getInitialBalance();
-						if(accountDTO.getMovements() != null && accountDTO.getMovements().size() > 0 ) {
-							Optional<AccountMovementsDTO> accountMovementsOpt = accountDTO.getMovements()
-							.stream()
-							.sorted((emit1, emit2) -> ((Long) emit2.getId()).compareTo(emit1.getId()))
-							.findFirst();
-							balanceCurrent = accountMovementsOpt.get().getBalance();
+						BigDecimal balanceCurrent = accountDTO.getInitialBalance();
+						if(accountDTO.getMovements() != null && !accountDTO.getMovements().isEmpty()) {
+							balanceCurrent = this.getBalanceCurrent(accountDTO);
 						}
 						AccountMovementsDTO accountMovementsDTO = mapper.convertValue(newMovenment, AccountMovementsDTO.class);
+						BigDecimal newBalance = this.getNewBalance(accountMovementsDTO, balanceCurrent);
 						accountMovementsDTO.setAccount(accountDTO);
-						Double newBalance = 0d;
-						if(accountMovementsDTO.getTypeOfMovement().equals(TypesOfMovements.CREDITO)) {
-							newBalance = balanceCurrent + accountMovementsDTO.getValue();
-						}else if(accountMovementsDTO.getTypeOfMovement().equals(TypesOfMovements.DEBITO)){
-							if(accountMovementsDTO.getValue() <= balanceCurrent) {
-								newBalance = balanceCurrent - accountMovementsDTO.getValue();
-							}else {
-								throw new ExceptionCustomService(ExceptionCustomService.INSUFFICIENT_BALANCE);
-							}
-						}
 						accountMovementsDTO.setBalance(newBalance);
-						accountMovementsDTO.setAccount(accountDTO);
 						accountMovementsListDTO.add(accountMovementsDTO);
 					} catch (Exception e) {
 						log.info(ERROR_TRANSACTION,e);
@@ -105,4 +92,26 @@ public class AccountMovementsServiceImpl implements AllAccountMovementsServiceRe
 		});
 		return result;
 	}
+	
+	private BigDecimal getBalanceCurrent(AccountDTO accountDTO) {
+		 return accountDTO.getMovements()
+				.stream()
+				.sorted((emit1, emit2) -> (emit2.getId()).compareTo(emit1.getId()))
+				.findFirst().get().getBalance();
+	}
+	
+	private BigDecimal getNewBalance(AccountMovementsDTO accountMovementsDTO,BigDecimal balanceCurrent ) throws ExceptionCustomService {
+		BigDecimal newBalance = BigDecimal.ZERO;
+		if(accountMovementsDTO.getTypeOfMovement().equals(TypesOfMovements.CREDITO)) {
+			newBalance = balanceCurrent.add(accountMovementsDTO.getValue());
+		}else if(accountMovementsDTO.getTypeOfMovement().equals(TypesOfMovements.DEBITO)){
+			if(accountMovementsDTO.getValue().compareTo(balanceCurrent) <= 0 ) {
+				newBalance = balanceCurrent.subtract(accountMovementsDTO.getValue());
+			}else {
+				throw new ExceptionCustomService(ExceptionCustomService.INSUFFICIENT_BALANCE);
+			}
+		}
+		return newBalance;
+	}
+
 }

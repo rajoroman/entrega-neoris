@@ -1,13 +1,14 @@
 package com.customerAccount.services.dto;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
+
 import com.customerAccount.services.enums.TypesOfMovements;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,11 +17,11 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MovementBaseDTO {
 
-//	@Temporal(TemporalType.DATE)
-//	private LocalDate date;
-	
+	@NotNull(message = "Type movement cannot be empty or null")
 	@Enumerated(EnumType.STRING) 
 	private TypesOfMovements typeOfMovement;
 	
-	private Double value;	
+	@NotNull(message = "Value of movement cannot be empty or null")
+	@Min(value = 1, message = "Value of movement cannot be less 1")
+	private BigDecimal value;	
 }

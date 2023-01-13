@@ -1,5 +1,6 @@
 package com.customerAccount.services.dto;
 
+import java.math.BigDecimal;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -13,7 +14,7 @@ public class AccountDTO {
 	private Long id;
 	private String accountNumber;
 	private AccountTypeDTO typeAccount;	
-	private Double  initialBalance;	
+	private BigDecimal  initialBalance;	
 	private Boolean status;
 	private CustomerDTO customer;
 	private List<AccountMovementsDTO> movements;

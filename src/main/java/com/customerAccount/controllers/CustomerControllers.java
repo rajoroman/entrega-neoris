@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,10 @@ import com.customerAccount.services.dto.CustomerDTO;
 import com.customerAccount.services.dto.ReportDTO;
 import com.customerAccount.services.dto.RequestReportDTO;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 
+@Validated
 @RestController
 @RequestMapping("customers")
 public class CustomerControllers {
@@ -27,7 +31,10 @@ public class CustomerControllers {
 	private AllCustomerServiceRepository serviceCustomer;	
 	
 	@PostMapping
-	public ResponseEntity<?> saveCustomer(@RequestBody List<CustomerDTO> customerDTOlist) throws Exception {
+	public ResponseEntity<?> saveCustomer(
+			@RequestBody
+			@NotEmpty(message = "Input customer list cannot be empty.")
+			List<@Valid CustomerDTO> customerDTOlist) throws Exception {
 		List<CustomerDTO> customerSave = serviceCustomer.save(customerDTOlist);	
 		return ResponseEntity.status(HttpStatus.CREATED).body(customerSave);
 	}
@@ -39,7 +46,7 @@ public class CustomerControllers {
 	}
 	
 	@GetMapping("/reports")
-	public ResponseEntity<?> getReport(@RequestBody RequestReportDTO requestReportDTO ) throws Exception {
+	public ResponseEntity<?> getReport(@RequestBody @Valid RequestReportDTO requestReportDTO ) throws Exception {
 		List<ReportDTO> customerReport = serviceCustomer.getCustomerToReports(requestReportDTO);	
 		return ResponseEntity.status(HttpStatus.OK).body(customerReport);
 	}

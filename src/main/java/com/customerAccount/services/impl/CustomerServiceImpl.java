@@ -25,6 +25,8 @@ import com.customerAccount.services.exceptions.ExceptionCustomService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.slf4j.Slf4j;
 
 import com.customerAccount.models.entity.Customer;
@@ -134,10 +136,9 @@ public class CustomerServiceImpl implements AllCustomerServiceRepository {
 			reportDTO.setDate(accountMovEmit.getDate());
 			reportDTO.setStatus(accountMovEmit.getStatus());
 			if (accountMovEmit.getTypeOfMovement().equals(TypesOfMovements.DEBITO))
-				reportDTO.setValue(accountMovEmit.getValue() * -1);
+				reportDTO.setValue(accountMovEmit.getValue().negate());
 			else
 				reportDTO.setValue(accountMovEmit.getValue());
 				return reportDTO;
 	}
-	
 }

@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "af2544a4-53b6-439d-ba6c-ff3dd13b6d77",
+		"name": "Account",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10800138"
+	},
+	"item": [
+		{
+			"name": "Create Accounts",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n  \"id\":0,\n  \"accountNumber\":\"478758\",\n  \"typeAccount\":1,\n  \"initialBalance\":2000,\n  \"status\":true,\n  \"customerId\":\"123456\"\n},\n{\n  \"id\":0,\n  \"accountNumber\":\"225487\",\n  \"typeAccount\":2,\n  \"initialBalance\":100,\n  \"status\":true,\n  \"customerId\":\"654321\"\n},\n{\n  \"id\":0,\n  \"accountNumber\":\"495878\",\n  \"typeAccount\":1,\n  \"initialBalance\":0,\n  \"status\":true,\n  \"customerId\":\"987654\"\n},\n{\n  \"id\":0,\n  \"accountNumber\":\"496825\",\n  \"typeAccount\":1,\n  \"initialBalance\":540,\n  \"status\":true,\n  \"customerId\":\"654321\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Account Jose Lema",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n  \"id\":0,\n  \"accountNumber\":\"585545\",\n  \"typeAccount\":2,\n  \"initialBalance\":1000,\n  \"status\":true,\n  \"customerId\":\"123456\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Account Generating Error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n  \"id\":0,\n  \"accountNumber\":\"585545\",\n  \"typeAccount\":2,\n  \"initialBalance\":1000,\n  \"status\":true,\n  \"customerId\":\"123456\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

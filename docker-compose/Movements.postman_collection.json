@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "23e76f62-c003-4b9c-b2b5-b744070b0c2f",
+		"name": "Movements",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10800138"
+	},
+	"item": [
+		{
+			"name": "Create Movements",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n  \"date\":\"2022-02-10T08:34:55\",\n  \"typeOfMovement\":\"DEBITO\",\n  \"value\":575,\n  \"accountNumber\":\"478758\"\n},\n{\n  \"date\":\"2022-02-10T08:34:55\",\n  \"typeOfMovement\":\"CREDITO\",\n  \"value\":600,\n  \"accountNumber\":\"225487\"\n},\n{\n  \"date\":\"2022-02-10T08:34:55\",\n  \"typeOfMovement\":\"CREDITO\",\n  \"value\":150,\n  \"accountNumber\":\"495878\"\n},\n{\n  \"date\":\"2022-02-10T08:34:55\",\n  \"typeOfMovement\":\"DEBITO\",\n  \"value\":540,\n  \"accountNumber\":\"496825\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/movements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"movements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Movements Generating Errors",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n  \"date\":\"2022-02-10T08:34:55\",\n  \"typeOfMovement\":\"DEBITO\",\n  \"value\":575,\n  \"accountNumber\":\"478758\"\n},\n{\n  \"date\":\"2022-02-10T08:34:55\",\n  \"typeOfMovement\":\"CREDITO\",\n  \"value\":600,\n  \"accountNumber\":\"225487\"\n},\n{\n  \"date\":\"2022-02-10T08:34:55\",\n  \"typeOfMovement\":\"CREDITO\",\n  \"value\":150,\n  \"accountNumber\":\"495878\"\n},\n{\n  \"date\":\"2022-02-10T08:34:55\",\n  \"typeOfMovement\":\"DEBITO\",\n  \"value\":540,\n  \"accountNumber\":\"496825\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/movements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"movements"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

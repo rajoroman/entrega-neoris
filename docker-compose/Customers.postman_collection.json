@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "de03cf0d-b884-46b2-9509-b60ea65ecc50",
+		"name": "Customers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10800138"
+	},
+	"item": [
+		{
+			"name": "Create Customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " [{\n   \"id\":0,  \n   \"customerId\":\"123456\",\n   \"password\":\"1234\",\n   \"status\":true,\n   \"idPerson\":\"2222\",\n   \"name\":\"Jose Lema\",\n   \"ega\":46,\n   \"addres\":\"Otavalo sn y principal\",\n   \"numberPhone\":\"098254785\",\n   \"gender\":{\"id\":1,\"description\":\"\"},\n   \"accounts\":null\n },\n {\n   \"id\":0,  \n   \"customerId\":\"654321\",\n   \"password\":\"5678\",\n   \"status\":true,\n   \"idPerson\":\"333\",\n   \"name\":\"Marianela Montalvo\",\n   \"ega\":36,\n   \"addres\":\"Amazonas y NNUU\",\n   \"numberPhone\":\"097548965\",\n   \"gender\":{\"id\":2,\"description\":\"\"},\n   \"accounts\":null\n }]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Customer Generating Error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " [{\n   \"id\":0,  \n   \"customerId\":\"123456\",\n   \"password\":\"1234\",\n   \"status\":true,\n   \"idPerson\":\"2222\",\n   \"name\":\"Jose Lema\",\n   \"ega\":46,\n   \"addres\":\"Otavalo sn y principal\",\n   \"numberPhone\":\"098254785\",\n   \"gender\":{\"id\":1,\"description\":\"\"},\n   \"accounts\":null\n },\n {\n   \"id\":0,  \n   \"customerId\":\"654321\",\n   \"password\":\"5678\",\n   \"status\":true,\n   \"idPerson\":\"333\",\n   \"name\":\"Marianela Montalvo\",\n   \"ega\":36,\n   \"addres\":\"Amazonas y NNUU\",\n   \"numberPhone\":\"097548965\",\n   \"gender\":{\"id\":2,\"description\":\"\"},\n   \"accounts\":null\n }]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCustomer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/customer/1254",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"customer",
+						"1254"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reportrs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"customerId\":\"123456\",\n  \"from\":\"2022-01-06\",\n  \"to\":\"2022-01-05\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/customers/reports",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"customers",
+						"reports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reportrs Generating Error",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"customerId\":\"\",\n  \"from\":\"\",\n  \"to\":\"\"  \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/customers/reports",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"customers",
+						"reports"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
